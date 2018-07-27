@@ -40,9 +40,11 @@ class HXExamQuestion {
   bool favorite;
   List<HXExamQuestionOutline> outlines;
   HXExamQuestionDetail examQuestion;
+  //UI数据
+  bool isShowAnswer;
 
 
-  HXExamQuestion.fromParams({this.examQuestionId, this.favorite, this.outlines, this.examQuestion});
+  HXExamQuestion.fromParams({this.examQuestionId, this.favorite, this.outlines, this.examQuestion,this.isShowAnswer});
 
   HXExamQuestion.fromJson(jsonRes) {
     examQuestionId = jsonRes['examQuestionId'];
@@ -54,7 +56,7 @@ class HXExamQuestion {
       }
     }
     examQuestion = new HXExamQuestionDetail.fromJson(jsonRes['examQuestion']);
-
+    isShowAnswer = false;
   }
 
   @override
@@ -71,12 +73,13 @@ class HXExamQuestionDetail {
   int examQuestionTypeId;
   bool isPastPaper;
   String examAnswer;
+  String myexamAnswer;
   String pastPaperNo;
   List<HXExamRichData> examQuestionTitleArray;
   List<HXExamOption> options;
 
 
-  HXExamQuestionDetail.fromParams({this.examQuestionId, this.examQuestionTypeId, this.isPastPaper, this.examAnswer, this.pastPaperNo, this.examQuestionTitleArray, this.options});
+  HXExamQuestionDetail.fromParams({this.examQuestionId, this.examQuestionTypeId, this.isPastPaper, this.examAnswer, this.myexamAnswer, this.pastPaperNo, this.examQuestionTitleArray, this.options});
 
   HXExamQuestionDetail.fromJson(jsonRes) {
     examQuestionId = jsonRes['examQuestionId'];
@@ -85,6 +88,7 @@ class HXExamQuestionDetail {
     examAnswer = jsonRes['examAnswer'];
     pastPaperNo = jsonRes['pastPaperNo'];
     examQuestionTitleArray = [];
+    myexamAnswer = "您未作答";
 
     for (var examQuestionTitleArrayItem in jsonRes['examQuestionTitleArray']){
 

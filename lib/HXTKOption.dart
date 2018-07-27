@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'HXExamData.dart';
 import 'HXTKOptionBaseItemWidget.dart';
 import 'HXTKOptionItemWidget.dart';
+import 'HXTKAnswerInfoWidget.dart';
 
 class HXTKOption extends StatefulWidget {
   final HXExamQuestionVo questionVo;
@@ -16,6 +17,7 @@ class HXTKOption extends StatefulWidget {
 
 class _HXTKOptionState extends State<HXTKOption> {
   HXExamData examData;
+
   final HXExamQuestionVo questionVo;
 
   _HXTKOptionState(this.questionVo);
@@ -31,29 +33,54 @@ class _HXTKOptionState extends State<HXTKOption> {
   Widget build(BuildContext context) {
     if (examData == null) {
       return new Center(
-          child: new SizedBox(width: 60.0,height: 60.0,child: new CircularProgressIndicator()));
+          child: new SizedBox(
+              width: 60.0,
+              height: 60.0,
+              child: new CircularProgressIndicator()));
     } else {
       return new ListView.builder(
           scrollDirection: Axis.vertical,
-          itemCount: examData == null
-              ? 0
-              : examData.data.first.examQuestion.options.length + 1,
+          itemCount: getShowCount(),
           itemBuilder: (BuildContext context, int index) {
             if (index == 0) {
               return new Container(
-                  margin: new EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
+                  margin: new EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 10.0),
                   child: new HXTKOptionBaseItemWidget(
                       examData.data.first.examQuestion.examQuestionTitleArray));
-            } else {
+            } else if (index >= 1 &&
+                index <= examData.data.first.examQuestion.options.length) {
               return new Container(
                 child: new InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      examData.data.first.isShowAnswer = true;
+                      examData.data.first.examQuestion.myexamAnswer = examData.data.first.examQuestion.options[index - 1].optionName;
+                      setState(() {
+                      });
+                    },
                     child: new HXTKOptionItemWidget(
                         examData.data.first.examQuestion.options[index - 1])),
               );
+            } else if (index == getShowCount() - 2) {
+              return new Container(
+                color: Color(0xFFF7F7F7),
+                height: 10.0,
+              );
+            } else if (examData.data.first.isShowAnswer && index == getShowCount() - 1){
+              return new HXTKAnswerInfoWidget(examData.data.first.examQuestion);
             }
           });
     }
+  }
+
+  int getShowCount() {
+    int count = 0;
+    if (examData == null) count = 0;
+    if (examData.data.first.isShowAnswer) {
+      count = examData.data.first.examQuestion.options.length + 3;
+    } else {
+      count = examData.data.first.examQuestion.options.length + 1;
+    }
+    return count;
   }
 
   void getExamData() async {

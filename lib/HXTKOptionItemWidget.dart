@@ -33,7 +33,7 @@ class HXTKOptionItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return new Container(
-      margin: new EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
+      margin: new EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 8.0),
       child: getWidget(),
     );
   }
