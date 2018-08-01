@@ -55,7 +55,15 @@ class HXTKAnswerInfoWidget extends StatelessWidget {
                             color: detail.myexamAnswer == detail.examAnswer ? Color(0XFF01A827) : Color(0XFFFF5555),
                             fontWeight: FontWeight.w300),
                       ),
-                    )
+                    ),
+                   new Container(
+                     margin: EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
+
+                     child: new Image.asset(
+                       detail.myexamAnswer == detail.examAnswer ? "assets/images/hx_image_right.png" :"assets/images/hx_image_wrong.png",
+                       width: 16.0,
+                       height: 16.0,),
+                   )
                   ],
                 ),
               )
