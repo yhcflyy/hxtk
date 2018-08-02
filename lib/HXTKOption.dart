@@ -38,9 +38,12 @@ class _HXTKOptionState extends State<HXTKOption> {
               height: 60.0,
               child: new CircularProgressIndicator()));
     } else {
-      return new ListView.builder(
+      return new SafeArea(
+        top: false,
+          child: new ListView.builder(
           scrollDirection: Axis.vertical,
           itemCount: getShowCount(),
+          padding: EdgeInsets.all(0.0),
           itemBuilder: (BuildContext context, int index) {
             if (index == 0) {
               return new Container(
@@ -68,7 +71,7 @@ class _HXTKOptionState extends State<HXTKOption> {
             } else if (examData.data.first.isShowAnswer && index == getShowCount() - 1){
               return new HXTKAnswerInfoWidget(examData.data.first.examQuestion);
             }
-          });
+          }));
     }
   }
 

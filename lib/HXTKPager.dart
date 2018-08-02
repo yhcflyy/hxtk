@@ -23,36 +23,30 @@ class _HXTKPagerState extends State<HXTKPager> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("text"),
-        backgroundColor: Colors.white,
-        elevation: 0.0,
-        brightness: Brightness.light,
-        actions: <Widget>[
-          new IconButton(icon: new Icon(Icons.settings), onPressed: null),
-          new IconButton(icon: new Icon(Icons.favorite), onPressed: null),
-          new IconButton(icon: new Icon(Icons.face), onPressed: null),
-          new IconButton(icon: new Icon(Icons.search), onPressed: null),
-        ],
-      ),
       body: Container(
         color: Colors.white,
-        child: new PageView.custom(
-            childrenDelegate:
-            MySliverChildBuilderDelegate((BuildContext context, int index) {
-              return new HXTKOption(resp.getExams()[index]);
-            }, childCount: resp == null ? 0 : resp
-                .getExams()
-                .length)),
-//        child: new PageView.builder(
-//            itemCount: resp == null ? 0 : resp.getExams().length,
-//            itemBuilder: (BuildContext context, int index) {
-//              print(index);
-//              return new Padding(
-//                padding: EdgeInsets.all(10.0),
-//                child: new HXTKOption(resp.getExams()[index]),
-//              );
-//            }),
+//        child: new PageView.custom(
+//            childrenDelegate:
+//            MySliverChildBuilderDelegate((BuildContext context, int index) {
+//              return new HXTKOption(resp.getExams()[index]);
+//            }, childCount: resp == null ? 0 : resp
+//                .getExams()
+//                .length)),
+        child: new Column(
+          children: <Widget>[
+            new Container(height: MediaQuery.of(context).padding.top + 40.0),
+            new Container(
+              height: MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top - 40.0,
+              width: MediaQuery.of(context).size.width,
+              child: new PageView.builder(
+                  itemCount: resp == null ? 0 : resp.getExams().length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return new HXTKOption(resp.getExams()[index]);
+                  }),
+            ),
+
+          ],
+        ),
       ),
     );
   }
